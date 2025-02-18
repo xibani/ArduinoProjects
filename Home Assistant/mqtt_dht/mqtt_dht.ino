@@ -18,7 +18,7 @@ PubSubClient client(espClient);
 // Configuración de los sensores
 // Definir el DHT1
 #define DHTPIN_1 4
-#define DHTTYPE DHT11
+#define DHTTYPE DHT22
 DHT dht_1(DHTPIN_1, DHTTYPE);
 
 // Definir el DHT2
@@ -66,14 +66,29 @@ void loop(){
     String temp1Str = String(temperatura_1);
     String hum1Str = String(humedad_1);
 
-    client.publish("home/esp32/dht11/temperature", temp1Str.c_str());
-    client.publish("home/esp32/dht11/humidity", hum1Str.c_str());
+    client.publish("home/esp32_v1/dht22_v1/temperature_1", temp1Str.c_str());
+    client.publish("home/esp32_v1/dht22_v1/humidity_1", hum1Str.c_str());
 
-    Serial.print("Temperatura: "); Serial.print(temperatura_1);
-    Serial.print(" ºC, Humedad: "); Serial.print(humedad_1);
+    Serial.print("Temperatura_1: "); Serial.print(temperatura_1);
+    Serial.print(" ºC, Humedad_1: "); Serial.print(humedad_1);
     Serial.println(" %");
   } else {
-    Serial.println("Error al leer el sensor DHT_1");
+    Serial.println("Error al leer el sensor DHT22_v1");
+  }
+
+  // Mandar la info del segundo sensor DHT22_v2
+  if (!isnan(temperatura_2) && !isnan(humedad_2)){
+    String temp2Str = String(temperatura_2);
+    String hum2Str = String(humedad_2);
+
+    client.publish("home/esp32_v1/dht22_v2/humidity_2", hum2Str.c_str());
+    client.publish("home/esp32_v1/dht22_v2/temperatura_2", temp2Str.c_str());
+
+    Serial.print("Temperatura_2: "); Serial.print(temperatura_2);
+    Serial.print(" ºC, Humedad_2: "); Serial.print(humedad_2);
+    Serial.println(" %");
+  } else {
+    Serial.println("Error al leer el sensor DHT22_v2");
   }
 
 
